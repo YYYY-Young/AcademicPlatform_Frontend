@@ -1,4 +1,23 @@
 <template>
+    <div>
+           <div class="header">
+        <!-- <div class="logo"></div> -->
+        <div class="nav">
+            <ul>
+                <li><a href="#"><router-link to='/'>首页</router-link></a></li>
+                <li><a href="#"><router-link to='/'>学科</router-link></a></li>
+                <li><a href="#"><router-link to='/experts'>排行榜</router-link></a></li>
+                <li><a href="#"><router-link to='/catagories'>专家网络</router-link></a></li>
+                <li><a href="#"><router-link to='/conf'>推荐论文</router-link></a></li>
+            </ul>
+        </div>
+        <div class="user">
+            <div class="login"><a href=" javascript:showDialog();"><router-link to='/login'>登录</router-link></a></div>
+            <a href="#" class="user_logo">
+                <img src="images/user.png" alt="">
+            </a>
+        </div>
+    </div>
     <el-container>
         <el-aside width="100px"></el-aside>
         <el-container>
@@ -80,6 +99,13 @@
         </el-container>
         <el-aside width="100px"></el-aside>
     </el-container>
+    <div class="footer">
+        <a href="#" class="f1">联系我们</a>
+        <a href="#" class="f2">帮助</a>
+        <a href="#" class="f3">条款</a>
+        <a href="#" class="f4">隐私权</a>
+    </div>
+    </div>
 </template>
 
 <script>
@@ -143,6 +169,7 @@
 </script>
 
 <style scoped>
+@import '../../assets/css/index.css';
     .el-row{
         margin-top: 10px;
     }
