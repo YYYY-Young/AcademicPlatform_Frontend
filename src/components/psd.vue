@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div >
      <!-- 首页模块开始 -->
       <div class="header">
         <!-- <div class="logo"></div> -->
@@ -21,36 +21,34 @@
         </div>
     </div>
 
-        <!-- 登录模块开始 -->
-    
-    <div class="ui-dialog" id="dialogMove">
-        <div class="ui-dialog-title" id="dialogDrag" onselectstart="return false">
+    <div class="w1">
+        <div class="w2">重置密码</div>
 
-            登录账号
-
-            <a class="ui-dialog-closebutton" href="javascript:hideDialog();"></a>
-
+        <div class="col">
+            <span> </span>
+            <input type="text" name="" id="" class="input" placeholder=" 请输入绑定邮箱">
         </div>
-        <div class="ui-dialog-content">
-            <div class="ui-dialog-l40 ui-dialog-pt15">
-                <input class="ui-dialog-input ui-dialog-input-username" type="input" placeholder="手机/邮箱/用户名" />
-            </div>
-            <div class="ui-dialog-l40 ui-dialog-pt15">
-                <input class="ui-dialog-input ui-dialog-input-password" type="input" placeholder="密码" />
-            </div>
-            <div class="ui-dialog-l40">
-                <a href="#"><router-link to='/psd'>忘记密码</router-link></a>
-            </div>
-            <div>
-                <a class="ui-dialog-submit" href="#">登录</a>
-            </div>
-            <div class="ui-dialog-l40">
-                <a href="register.html"><router-link to='/register'>立即注册</router-link></a>
-            </div>
+        <div class="col">
+            <span> </span>
+            <input type="text" class="input" id="password" placeholder="请输入新密码">
+        </div>
+        <div class="col">
+            <span> </span>
+            <input type="text" name="" id="password" class="input" placeholder="请再次输入密码">
+        </div>
+        <div class="col3 col">
+            <span> </span>
+            <input type="text" name="" id="password_id" class="input" placeholder="请输入验证码">
+            <input type="button" value="获取邮箱验证码" class="button" id="getId">
+        </div>
+        <br>
+        <div>
+            <button id="submit" class="submit">确定</button>
         </div>
     </div>
-    
-    <!-- 登录模块结束 -->
+
+
+    <!-- 注册模块结束 -->
 
 
     <div class="footer">
@@ -67,7 +65,7 @@
 
 <script>
 export default {
-  name: 'login',
+  name: 'psd',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -79,6 +77,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import '../assets/css/index.css';
-@import '../assets/css/login.css';
+@import '../assets/css/register.css';
 
 </style>

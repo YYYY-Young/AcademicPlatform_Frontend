@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import index from '@/components/index'
 import register from '@/components/register'
+import psd from '@/components/psd'
 import login from '@/components/login'
 import conf from '@/components/ranks/conf'
 import experts from '@/components/ranks/experts'
@@ -28,6 +29,11 @@ export default new Router({
       path: '/login',
       name: '/login',
       component: login
+    },
+    {
+      path: '/psd',
+      name: '/psd',
+      component: psd
     },
     {
       path: '/conf',
