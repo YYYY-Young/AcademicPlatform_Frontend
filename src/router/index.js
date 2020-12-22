@@ -7,6 +7,8 @@ import psd from '@/components/psd'
 import login from '@/components/login'
 import conf from '@/components/ranks/conf'
 import experts from '@/components/ranks/experts'
+import people from '@/components/search/Searchpeople'
+import paper from '@/components/search/Searchpaper'
 // import ProItems from '@/components/experts/ProItem'
 import ProCata from '@/components/experts/ProCata'
 import CataDetail from '@/components/experts/CataDetail'
@@ -44,6 +46,16 @@ export default new Router({
       path: '/experts',
       name: 'experts',
       component: experts
+    },
+    {
+      path: '/people',
+      name: 'people',
+      component: people
+    },
+    {
+      path: '/paper',
+      name: 'paper',
+      component: paper
     },
     {
       path: '/catagories',

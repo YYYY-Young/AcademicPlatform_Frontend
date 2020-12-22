@@ -16,7 +16,7 @@
         <div class="user">
             <div class="login"><a href=" javascript:showDialog();"><router-link to='/login'>登录</router-link></a></div>
             <a href="#" class="user_logo">
-                <img src="images/user.png" alt="">
+                <!-- <img src="../assets/images/user.png" alt=""> -->
             </a>
         </div>
     </div>
@@ -25,7 +25,8 @@
     </div>
     <div class="search w">
         <input type="text" value="">
-        <button></button>
+        <router-link to="/paper"><button></button></router-link>
+        
     </div>
     <div class="banner w">
         <form>

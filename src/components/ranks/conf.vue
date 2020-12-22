@@ -164,7 +164,7 @@
                 tableData: [{
                     rank: 1,
                     meetingName: '[IJCV]International Journal of Computer Vision',
-                    H5Mark: 74,
+                    H5Mark: 75,
                     onMark:51,
                     tk5Mark:58.5,
                     ccfMark:'A',
@@ -184,7 +184,7 @@
                 }, {
                     rank: 3,
                     meetingName: '[IJCV]International Journal of Computer Vision',
-                    H5Mark: 74,
+                    H5Mark: 76,
                     onMark:51,
                     tk5Mark:58.5,
                     ccfMark:'A',
@@ -194,7 +194,7 @@
                 }, {
                     rank: 4,
                     meetingName: '[IJCV]International Journal of Computer Vision',
-                    H5Mark: 74,
+                    H5Mark: 78,
                     onMark:51,
                     tk5Mark:58.5,
                     ccfMark:'A',

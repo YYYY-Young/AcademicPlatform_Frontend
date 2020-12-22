@@ -54,7 +54,7 @@
 </div>
 </template>
 
-<style>
+<style scoped>
 @import '../../assets/css/index.css';
   .el-header {
     background-color: #B3C0D1;
