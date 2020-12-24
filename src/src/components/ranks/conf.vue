@@ -5,7 +5,7 @@
         <div class="nav">
             <ul>
                 <li><a href="#"><router-link to='/'>首页</router-link></a></li>
-                <li><a href="#"><router-link to='/'>学科</router-link></a></li>
+                <li><a href="#"><router-link to='/classification'>学科</router-link></a></li>
                 <li><a href="#"><router-link to='/experts'>排行榜</router-link></a></li>
                 <li><a href="#"><router-link to='/catagories'>专家网络</router-link></a></li>
                 <li><a href="#"><router-link to='/conf'>推荐论文</router-link></a></li>

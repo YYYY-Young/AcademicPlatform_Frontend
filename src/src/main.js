@@ -5,17 +5,21 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
+import store from './store'
+import Vuex from 'vuex'
 var axios = require('axios')
 axios.defaults.baseURL = 'http://localhost:7001'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+    /* eslint-disable no-new */
 
-/* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>'
 })

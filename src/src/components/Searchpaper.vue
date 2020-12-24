@@ -5,7 +5,7 @@
         <div class="nav">
             <ul>
                 <li><a href="#"><router-link to='/'>首页</router-link></a></li>
-                <li><a href="#"><router-link to='/'>学科</router-link></a></li>
+                <li><a href="#"><router-link to='/classification'>学科</router-link></a></li>
                 <li><a href="#"><router-link to='/experts'>排行榜</router-link></a></li>
                 <li><a href="#"><router-link to='/catagories'>专家网络</router-link></a></li>
                 <li><a href="#"><router-link to='/conf'>推荐论文</router-link></a></li>
@@ -13,6 +13,7 @@
         </div>
         <div class="user">
             <div class="login"><a href=" javascript:showDialog();"><router-link to='/login'>登录</router-link></a></div>
+              <div class="login"><a @click="jumpuser()"><router-link to=''>个人中心</router-link></a></div>
             <a href="#" class="user_logo">
                 <img src="images/user.png" alt="">
             </a>
@@ -23,38 +24,33 @@
     <el-container>
       <el-main>
         <el-scrollbar>
-          <el-row>
-            <div class="search">
-              <span>
-                <el-select
-                  v-model="value"
-                  placeholder="请选择学科类型"
-                  class="type"
-                >
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  >
-                  </el-option>
-                </el-select>
-              </span>
-              <span>
-                <el-input
-                  placeholder="请输入关键词"
-                  v-model="input"
-                  clearable
-                  size="max"
-                  suffix-icon="el-icon-s-operation"
-                >
-                </el-input>
-              </span>
-              <span>
-                <el-button icon="el-icon-search" @click="search()"></el-button>
-              </span>
-            </div>
-          </el-row>
+          <el-row :gutter="2">
+           
+              
+                 <el-col :span="8">
+                <el-input
+                  placeholder="请输入关键词"
+                  v-model="input"
+                  clearable 
+                  autosize                 
+                >
+                </el-input>
+                 </el-col>
+                  <el-col :span="1">
+                <el-button  @click="search(0,0)" style="width:50px" icon="el-icon-search" type="primary"></el-button>      
+                  </el-col>
+                   <el-col :span="4">
+                <el-select v-model="way" placeholder="请选择" >
+                 <el-option
+                   v-for="item in options"
+                   :key="item.way"
+                   :label="item.label"
+                   :value="item.way">
+                 </el-option>
+               </el-select> 
+                   </el-col>           
+            
+          </el-row>
           <el-row class="searchtype">
             <el-button type="primary" plain >论文</el-button>
             <el-button type="primary" plain @click="searchpeople()">专家</el-button
@@ -81,7 +77,7 @@
           </el-row>
           <el-row style="height: calc(80vh)">
             <!--第一列明细信息-->
-            <el-col span="13">
+            <el-col span="27">
               <el-row class="rowLine" v-for="item in paperContent">
                 <el-col span="20">
                   <!--名称-->
@@ -91,56 +87,55 @@
                   <!--数量-->
                   <el-row class="contentTdFont">
                     <span class="contentTd"><em></em>作者:</span>
-                  
-                     <span>{{item.authors.name}}</span>
+                  <span v-for="(au,index) in JSON.parse(item.authors)" v-if="index < 5" :key='index'>
+                  <span>{{au.name}} </span>
+                  </span>
+                     
                    
 
-                    <span class="contentSplit">|</span>
+                   <div>
                     <span class="contentTd">引用数:</span>
                     <span>{{ item.n_citation }}</span>
+                   </div>
+                   <div>
+                    <span class="contentTd">发表年份:</span>
+                    <span>{{ item.year }}</span>
+                   </div>
+                   
                   </el-row>
                   <!--学位-->
-                  <el-row class="contentTdFont">
-                    <span class="el-icon-s-finance">{{ item.p_abstract }}</span>
+                  <el-row class="contentdes">
+                    <span >{{ item.p_abstract }}</span>
                   </el-row>
                   <!--简介-->
-                  <el-row class="contentTdFont">
-                    <span class="el-icon-location">
-                      {{ item._score }}
-                    </span>
+                  <el-row class="contentTdFont" >
+                    <div   v-for="(ur,index) in JSON.parse(item.url)" v-if="index < 2" :key='index' >
+                    <a  :href="ur" >
+                    {{ur}}
+                    </a> 
+                    </div>
                   </el-row>
                   <!--学科-->
                   <el-row class="contentTdFont">
-                    <span v-for="t in item.subject" :key="t"
-                      ><span class="contentTdXk">{{ t }}</span></span
-                    >
+                   <el-button round @click="fav(item.id)">收藏</el-button>
                   </el-row>
                 </el-col>
               </el-row>
             </el-col>
-            <!--第二列指数-->
-
-            <el-col span="2">
-              <el-row class="rowLine" v-for="item in paperContent">
-                <el-button round>收藏</el-button></el-row
-              >
-            </el-col>
-            <!--右边固定小卡片-->
-            <el-col span="7">
-              <el-card>
-                <div slot="header" style=":before">
-                  <span style="font-size: 20px;">发表时间</span>
-                </div>
-                <div>时间近几年</div>
-                <div class="block">
-                  <el-slider v-model="time" range show-stops :max="10">
-                  </el-slider>
-                </div>
-              </el-card>
-            </el-col>
           </el-row>
-        
+         
         </el-scrollbar>
+         <div class="block">
+    <span class="demonstration"></span>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      :page-size="20"
+      layout="prev, pager, next, jumper"
+      :total=this.total>
+    </el-pagination>
+  </div>
       </el-main>
     </el-container>
     <el-aside width="100px"></el-aside>
@@ -156,29 +151,23 @@ export default {
 
   data() {
     return {
-      input: "",
-      options: [
-        {
-          value: "选项1",
-          label: "计算机科学"
-        },
-        {
-          value: "选项2",
-          label: "数学"
-        },
-        {
-          value: "选项3",
-          label: "物理"
-        },
-        {
-          value: "选项4",
-          label: "生物"
-        },
-        {
-          value: "选项5",
-          label: "化学"
-        }
-      ],
+      options: [{
+          way: '1',
+          label: '普通搜索'
+        }, {
+          way: '2',
+          label: '关键词搜索'
+        }, {
+          way: '3',
+          label: '作者搜索'
+        }, {
+          way: '4',
+          label: '文章名'
+        }],
+      way: '1',
+      input: this.$route.query.sea,
+      page:" ",
+      
       value: "",
       radio: "1",
       sortoption: "引用数",
@@ -186,55 +175,36 @@ export default {
       time: [0, 3],
       /*第一排标题栏目中的信息*/
       rankTitleList: [
-        { titleId: 1, titleName: "综合" },
-        { titleId: 2, titleName: "最新" },
+        { titleId: 0, titleName: "综合" },
+        { titleId: 1, titleName: "最新" },
         { titleId: 3, titleName: "引用数" }
       ],
       /*全部信息*/
       paperContent:[],
-      personContent: [
-        {
-          title: "Data mining: concepts and techniques",
-          first_author: "Mark Hall",
-          second_author: "Eibe Frank",
-          quoteNum: 20837,
-          des:
-            "More than twelve years have elapsed since the first public release of WEKA. In that time, the software has been rewritten entirely from scratch, evolved substantially and now accompanies a text on data mining [35]. These days, WEKA enjoys widespread acceptance in both academia and business, has an active community, and has been downloaded more than 1.4 million times since being placed on Source-Forge in April 2000. This paper provides an introduction to the WEKA workbench, reviews the history of the project, and, in light of the recent 3.6 stable release, briefly discusses what has been added since the last stable version (Weka 3.4) released in 200",
-          source: "SIGKDD Explorations, pp. 10-18, 2009.",
-          subject: ["Search For", "Cross Sections", "Light On"],
-          hIndexOrder: 1,
-          order: 1
-        },
-        {
-          title: "Data mining: concepts and techniques",
-          first_author: "Mark Hall",
-          second_author: "Eibe Frank",
-          quoteNum: 20837,
-          des:
-            "More than twelve years have elapsed since the first public release of WEKA. In that time, the software has been rewritten entirely from scratch, evolved substantially and now accompanies a text on data mining [35]. These days, WEKA enjoys widespread acceptance in both academia and business, has an active community, and has been downloaded more than 1.4 million times since being placed on Source-Forge in April 2000. This paper provides an introduction to the WEKA workbench, reviews the history of the project, and, in light of the recent 3.6 stable release, briefly discusses what has been added since the last stable version (Weka 3.4) released in 200",
-          source: "SIGKDD Explorations, pp. 10-18, 2009.",
-          subject: ["Search For", "Cross Sections", "Light On"],
-          hIndexOrder: 1,
-          order: 1
-        },
-        {
-          title: "Data mining: concepts and techniques",
-          first_author: "Mark Hall",
-          second_author: "Eibe Frank",
-          quoteNum: 20837,
-          des:
-            "More than twelve years have elapsed since the first public release of WEKA. In that time, the software has been rewritten entirely from scratch, evolved substantially and now accompanies a text on data mining [35]. These days, WEKA enjoys widespread acceptance in both academia and business, has an active community, and has been downloaded more than 1.4 million times since being placed on Source-Forge in April 2000. This paper provides an introduction to the WEKA workbench, reviews the history of the project, and, in light of the recent 3.6 stable release, briefly discusses what has been added since the last stable version (Weka 3.4) released in 200",
-          source: "SIGKDD Explorations, pp. 10-18, 2009.",
-          subject: ["Search For", "Cross Sections", "Light On"],
-          hIndexOrder: 1,
-          order: 1
-        }
-      ]
-
+      ur:"",
+      currentPage:2,
+      isActive: 1,
+      sort:0
     };
   },
   mounted() {},
   methods: {
+     jumpuser(){
+        if(this.$store.state.user.id!=null){
+            if(this.$store.state.user.isadmin==1){
+               this.$router.push("/manage");
+           }else{
+            this.$router.push("/user");
+           }
+        }
+        else{
+           
+            this.$alert('未登录请登陆', '提示', {
+                confirmButtonText: '确定'
+              })
+        }
+       
+    },
     searchpeople() {
       this.$router.push("/searchpeople");
     },
@@ -242,17 +212,79 @@ export default {
       //点击任意一个title 变蓝色
       this.isActive = val;
     },
-    search(){
+    fav(id){
+        var _this = this
+       
+        this.$axios.post('/main-part/api/user/favorites/add', {
+            userid: _this.$store.state.user.id,
+           paperid: id
+
+          })
+          .then(resp => {
+            if (resp.data.code === 200) {
+              var data = resp.data.result
+              //console.log(_this.$store.state.user.id)
+              this.$alert("收藏成功")
+      
+            } else {
+              this.$alert(resp.data.message, '提示', {
+                confirmButtonText: '确定'
+              })
+            }
+          })
+          .catch(failResponse => {})
+      
+    },  handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.search(this.isActive,val)
+      
+    },
+     titleNameClick: function (val) {
+                //点击任意一个title 变蓝色
+                this.isActive=val;
+                
+                this.search(val,0)
+            },
+    search(sort,page){
       
         //使用的阅读列表进行的测试
        var _this = this
        //console.log(this.$store.)
-        this.$axios.get('/search-part/api/paper/search/keyword/'+this.input+'/0/8/0').then(resp => {
-          if (resp && resp.data.code === 200) {
-                _this.paperContent=resp.data.result
-               
-          }
-        })
+       if (_this.way == 1){
+        this.$axios.get('/search-part/api/paper/search/keyword/'+this.input+'/'+page+'/20/'+sort).then(resp => {
+          if (resp && resp.data.code === 200) {
+                _this.paperContent=resp.data.result
+               
+          }
+        })
+       }else if (_this.way == 2){
+          console.log("2")
+          this.$axios.get('/search-part/api/paper/search/kewordonly/'+this.input+'/'+page+'/20/'+sort).then(resp => {
+          if (resp && resp.data.code === 200) {
+                _this.paperContent=resp.data.result
+               
+          }
+        })
+       }else if (_this.way == 3){
+          console.log("3")
+          this.$axios.get('/search-part/api/paper/search/author/'+this.input+'/'+page+'/20/'+sort).then(resp => {
+          if (resp && resp.data.code === 200) {
+                _this.paperContent=resp.data.result
+               
+          }
+        })
+       }else if (_this.way == 4){
+          console.log("4")
+          this.$axios.get('/search-part/api/paper/search/title/'+this.input+'/'+page+'/20/'+sort).then(resp => {
+          if (resp && resp.data.code === 200) {
+                _this.paperContent=resp.data.result
+               
+          }
+        })
+       }
         },
         rowStyle({row,rowIndex}){
           let colorstyle={}
@@ -268,11 +300,13 @@ export default {
 
 </script>
 <style >
+@import '../assets/css/index.css';
 .search span {
   float: left;
 }
-.search {
-}
+.selectTitle{
+        color: #3c80bc;
+    }
 .searchtype {
   position: relative;
   left: 2%;
@@ -290,6 +324,13 @@ export default {
   font-size: 20px;
   line-height: 27px;
   border-bottom: 2px solid #428bca;
+}
+.contentdes{
+  overflow : hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
 }
 .contentSplit {
   margin: 0 5px;
@@ -311,10 +352,14 @@ export default {
   font-size: 12px;
   line-height: 18px;
 }
+.demonstration{
+  position: abuslute;
+  top:90%;
+}，
 .rowLine {
-  border-bottom: 1px dashed #eee;
+ 
   padding: 5px 0;
-  height: 200px;
+ 
 }
 .indexNum {
   font-size: 24px;

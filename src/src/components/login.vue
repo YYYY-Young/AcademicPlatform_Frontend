@@ -7,7 +7,7 @@
         <div class="nav">
             <ul>
                 <li><a href="#"><router-link to='/'>首页</router-link></a></li>
-                <li><a href="#"><router-link to='/'>学科</router-link></a></li>
+                <li><a href="#"><router-link to='/classification'>学科</router-link></a></li>
                 <li><a href="#"><router-link to='/experts'>排行榜</router-link></a></li>
                 <li><a href="#"><router-link to='/catagories'>专家网络</router-link></a></li>
                 <li><a href="#"><router-link to='/conf'>推荐论文</router-link></a></li>
@@ -90,12 +90,14 @@ export default {
           .then(resp => {
             if (resp.data.code === 200) {
               var data = resp.data.result
-              alert("ok")
+              console.log('11111')
               _this.$store.commit('login', data)
               //console.log(_this.$store.state.user.id)
+              console.log('222222')
+              //alert("ok")
               var path = _this.$route.query.redirect
-    
-              _this.$router.replace({path: path === '/' || path === undefined ? '/' : path})
+              
+              _this.$router.replace({path: path === '/' || path === undefined ? '/searchpaper' : path})
             } else {
               this.$alert(resp.data.message, '提示', {
                 confirmButtonText: '确定'

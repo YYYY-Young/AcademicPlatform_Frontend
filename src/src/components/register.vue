@@ -7,7 +7,7 @@
         <div class="nav">
             <ul>
                 <li><a href="#"><router-link to='/'>首页</router-link></a></li>
-                <li><a href="#"><router-link to='/'>学科</router-link></a></li>
+                <li><a href="#"><router-link to='/classification'>学科</router-link></a></li>
                 <li><a href="#"><router-link to='/experts'>排行榜</router-link></a></li>
                 <li><a href="#"><router-link to='/catagories'>专家网络</router-link></a></li>
                 <li><a href="#"><router-link to='/conf'>推荐论文</router-link></a></li>
@@ -26,27 +26,23 @@
 
         <div class="col">
             <span> </span>
-            <input type="text" name="" id="" v-model="loginForm.name" class="input" placeholder=" 请设置用户名">
+            <input type="text" name="" id="" class="input" placeholder=" 请设置用户名" v-model="name">
         </div>
         <div class="col">
             <span> </span>
-            <input type="text" class="input" id="telephone" v-model="loginForm.email" placeholder="请输入邮箱">
+            <input type="text" class="input" id="telephone" placeholder="请输入邮箱" v-model="email">
         </div>
         <div class="col">
             <span> </span>
-            <input type="text" name="" id="password" v-model="loginForm.password" class="input" placeholder="请设置登录密码">
+            <input type="text" name="" id="password" class="input" placeholder="请设置登录密码" v-model="password">
         </div>
-        <div class="col3 col">
-            <span> </span>
-            <input type="text" name="" id="password_id" class="input" placeholder="请输入验证码">
-            <input type="button" value="获取邮箱验证码" class="button" id="getId">
-        </div>
+  
         <div class="col4">
             <input type="checkbox" name="" id="" class="right">
             <span style="display:inline;">阅读并接受<a href="#" id="one">《用户条例》</a>和<a href="#" id="two">《隐私保护声明》</a></span>
         </div>
         <div>
-            <button id="submit" class="submit">注册</button>
+            <button id="submit" class="submit"  @click="register()">注册</button>
         </div>
     </div>
 
@@ -71,15 +67,44 @@ export default {
   name: 'register',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+     name: "",
+     email:"",
+     password: ""
+    }
+  },
+  methods:{
+    register() {
+     
+       
+        var _this = this
+        this.$axios.post('n', {
+            name: this.name,
+            password: this.password,
+            email: this.email
+          })
+          .then(resp => {
+            if (resp.data.code === 200) {
+              var data = resp.data.result
+              //_this.$store.commit('login', data)
+              this.$message.success('注册成功，请登录')
+              this.$router.push('/login')
+            } else {
+              this.$alert(resp.data.message, '用户已存在', {
+                confirmButtonText: '确定'
+              })
+            }
+          }
+          )
+          .catch(failResponse => {})
+    
     }
   }
-}
+  }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @import '../assets/css/index.css';
 @import '../assets/css/register.css';
-
 </style>

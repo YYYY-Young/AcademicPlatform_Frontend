@@ -1,0 +1,91 @@
+.main {
+    overflow: hidden;
+    width: 100%;
+    height: 800px;
+}
+
+.side, .data {
+    float: left;
+}
+
+.side {
+    width: 290px;
+    height: 665px;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+
+.f1 {
+    width: 260px;
+    height: 125px;
+    padding:0 15px;
+    background-color: white;
+    overflow: hidden;
+}
+
+.f2 {
+    width: 260px;
+    height: 165px;
+    padding:0 15px;
+    background-color: white;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.f11,.f21 {
+    width: 260px;
+    height: 21px;
+    padding-top: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e4e6ec;
+    font-size: 1em;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 5px;
+    line-height: 1.33333333em;
+}
+
+.f12,.f13,.f22,.f23,.f24 {
+    color: #222222;
+    font-size: 15px;
+    width: 219px;
+    height: 35px;
+    line-height: 30px;
+}
+
+.f13:hover,.f12:hover,.f23:hover,.f24:hover{
+    background-color: #e4e6ec;
+}
+
+.f22 {
+    color: #ffffff;
+    background-color: #1679ff;
+}
+.f22:hover {
+    background-color: #33aaff;
+}
+
+.pic {
+    float: left;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    height: 200px;
+    width: calc(95% - 290px);
+    background-color: #fff;
+}
+
+.data {
+    float: left;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    height: 950px;
+    width: calc(95% - 290px);
+    background-color: #fff;
+}
+
+.f {
+    margin-top: 10px;
+    margin-right: 20px;
+}
